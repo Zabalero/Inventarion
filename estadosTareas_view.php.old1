@@ -1,0 +1,44 @@
+<?php
+	
+	require_once "inc/theme.inc";
+	require "inc/funciones.inc";
+
+	//Conectar con el servidor de base de datos
+	$conn=conectar_bd();	
+
+	$id = $_GET['id'];
+    
+        $tsql = "SELECT * FROM INV_tbEstados WHERE id_Estado={$id}";
+	
+
+	$registros = sqlsrv_query($conn, $tsql);
+
+	if( $registros === false ) {
+	   	die ("Error al ejecutar consulta: ".$tsql);
+	}
+	
+	$linea = sqlsrv_fetch_array($registros);
+
+  
+?>
+
+<form method="post" id="formEdit" name="formEdit" action="estadosTareas_view.php" role="form">
+	<div class="modal-body">       
+		<fieldset>
+                <div class="control-group form-group">
+                        <div class="controls">
+                         <strong>Estado: </strong><input type="text" class="form-control" readonly name="Estado" maxlength="50" value="<?php echo($linea["Estado"]); ?>" style="width:70%;"></div>
+                      </div>
+
+                      <div class="control-group form-group">
+                          <div class="controls"> 
+                              <strong>Fecha Vigencia: </strong>
+                              <input type="date" readonly maxlength="10" name="FECHA_VIGENCIA" id="FECHA_VIGENCIA" value="<?php echo date_format($linea['FECHA_VIGENCIA'], 'Y-m-d'); ?>" style="width:70%;"  data-date-format="dd/mm/yyyy">
+                          </div>
+                      </div>
+		</fieldset>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+	</div>
+</form>

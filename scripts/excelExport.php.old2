@@ -1,0 +1,473 @@
+<?php 
+session_start();
+$nombreFichero = date('YmdHis');
+$solicitud = $_GET['origen'];
+header("Content-Disposition: attachment; filename=".$solicitud."_".$nombreFichero.".xls");
+header("Content-Type: application/vnd.ms-excel");
+?>
+<html LANG="es">
+<head>
+<meta http-equiv=content-type content=text/html; charset= UTF-8> 
+<title>GENERAR FICHERO EXCEL</title>
+</head>
+<body>
+
+<?php
+require "../inc/funciones.inc";
+
+if ($solicitud === 'DESCARGA_RA') {
+	$conn=conectar_bd();
+
+	$tsql = "SELECT *
+			FROM RA_GRAL_DESCARGA
+			WHERE ACT_ID_FDTT IS NOT NULL";
+
+	$stmt = sqlsrv_query( $conn, $tsql );
+
+	if( $stmt === false ){
+		die ("Error al ejecutar consulta");
+	}
+
+	$rows = sqlsrv_has_rows( $stmt );
+
+	if ($rows === true){						
+		print ("<table border='1' bordercolor='black'>\n");
+		print ("<tr aling='center' >\n");
+		print ("<th bgcolor='#EAA724'>CABECERA_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>PROVINCIA_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>ACT_JAZTELL_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>ACT_ID_FDTT</th>\n");
+		print ("<th bgcolor='#EAA724'>EECC_DISENO_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>EECC_CONSTRUCCION_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>EECC_CARGA_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>FECHA_ENVIO_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>FECHA_ENTREGA_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>RESPONSABLE_CARGA_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>ESTADO_RA</th>\n");		
+		print ("<th bgcolor='#EAA724'>ESTADO_GIS_RA</th>\n");						
+		print ("<th bgcolor='#EAA724'>EEMM_RA</th>\n");	
+		print ("</tr>\n");		
+		while($row = sqlsrv_fetch_array($stmt)){
+			print ("<tr>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['CABECERA_RA'] . "</b></td>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['PROVINCIA_RA'] . "</b></td>\n");			
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACT_JAZTELL_RA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACT_ID_FDTT'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['EECC_DISENO_RA'] . "</b></td>\n");					
+			print ("<td bgcolor='#FAE187'><b>" . $row['EECC_CONSTRUCCION_RA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['EECC_CARGA_RA'] . "</b></td>\n");
+
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_ENVIO_RA'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_ENTREGA_RA'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['RESPONSABLE_CARGA_RA'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['ESTADO_RA'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ESTADO_GIS_RA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['EEMM_RA'] . "</b></td>\n");
+			print ("</tr>\n");
+		}				
+			print ("</table>\n");		
+	}
+	sqlsrv_free_stmt( $stmt);
+	sqlsrv_close( $conn);
+}
+
+
+if ($solicitud === 'DESCARGA_RD') {
+	$conn=conectar_bd();
+
+	$tsql = "SELECT *
+			FROM RD_GRAL_DESCARGA
+			WHERE ACT_ID_FDTT_RD IS NOT NULL";
+
+	$stmt = sqlsrv_query( $conn, $tsql );
+
+	if( $stmt === false ){
+		die ("Error al ejecutar consulta");
+	}
+
+	$rows = sqlsrv_has_rows( $stmt );
+
+	if ($rows === true){						
+		print ("<table border='1' bordercolor='black'>\n");
+		print ("<tr aling='center' >\n");
+		print ("<th bgcolor='#EAA724'>ACT_ID_FDTT_RD</th>\n");
+		print ("<th bgcolor='#EAA724'>ACTUACION_JAZZTEL_FDTT</th>\n");
+		print ("<th bgcolor='#EAA724'>ACT_TESA_RD</th>\n");
+		print ("<th bgcolor='#EAA724'>ID_ZONA_RD</th>\n");
+		print ("<th bgcolor='#EAA724'>REGION_RD</th>\n");
+		print ("<th bgcolor='#EAA724'>CABECERA_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>ARBOL_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>FASE_RD</th>\n");
+		print ("<th bgcolor='#EAA724'>EEMM_RD</th>\n");
+		print ("<th bgcolor='#EAA724'>ESTADO_GIS_RD</th>\n");
+		print ("<th bgcolor='#EAA724'>GESTOR_RD</th>\n");		
+		print ("<th bgcolor='#EAA724'>EECC_DIS_RD</th>\n");						
+		print ("<th bgcolor='#EAA724'>EECC_CONS_RD</th>\n");
+		print ("<th bgcolor='#EAA724'>EECC_CARGA_RD</th>\n");		
+		print ("<th bgcolor='#EAA724'>FECHA_ENVIO_RD</th>\n");						
+		print ("<th bgcolor='#EAA724'>FECHA_ENTREGA_RD</th>\n");			
+		print ("</tr>\n");		
+		while($row = sqlsrv_fetch_array($stmt)){
+			print ("<tr>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACT_ID_FDTT_RD'] . "</b></td>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACTUACION_JAZZTEL_FDTT'] . "</b></td>\n");			
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACT_TESA_RD'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ID_ZONA_RD'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['REGION_RD'] . "</b></td>\n");					
+			print ("<td bgcolor='#FAE187'><b>" . $row['CABECERA_RA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ARBOL_RA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['FASE_RD'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['EEMM_RD'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ESTADO_GIS_RD'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['GESTOR_RD'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['EECC_DIS_RD'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['EECC_CONS_RD'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['EECC_CARGA_RD'] . "</b></td>\n");			
+
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_ENVIO_RD'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_ENTREGA_RD'], 'd/m/Y') . "</td>\n");
+
+			print ("</tr>\n");
+		}				
+			print ("</table>\n");		
+	}
+	sqlsrv_free_stmt( $stmt);
+	sqlsrv_close( $conn);
+}
+
+if ($solicitud === 'DESCARGA_ESTADO_RA') {
+	$conn=conectar_bd();
+
+	$tsql = "SELECT Id_FDTT, Estado_carga_GIS
+			FROM INV_RA
+			WHERE Id_FDTT IS NOT NULL";
+
+	$stmt = sqlsrv_query( $conn, $tsql );
+
+	if( $stmt === false ){
+		die ("Error al ejecutar consulta");
+	}
+
+	$rows = sqlsrv_has_rows( $stmt );
+
+	if ($rows === true){						
+		print ("<table border='1' bordercolor='black'>\n");
+		print ("<tr aling='center' >\n");
+		print ("<th bgcolor='#EAA724'>Id_FDTT</th>\n");
+		print ("<th bgcolor='#EAA724'>Estado_carga_GIS</th>\n");
+		print ("</tr>\n");		
+		while($row = sqlsrv_fetch_array($stmt)){
+			print ("<tr>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['Id_FDTT'] . "</b></td>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['Estado_carga_GIS'] . "</b></td>\n");
+			print ("</tr>\n");
+		}				
+			print ("</table>\n");		
+	}
+	sqlsrv_free_stmt( $stmt);
+	sqlsrv_close( $conn);
+}
+
+if ($solicitud === 'DESCARGA_ESTADO_RD') {
+	$conn=conectar_bd();
+
+	$tsql = "SELECT Id_FDTT, ESTADO_GIS
+			FROM INV_RD
+			WHERE Id_FDTT IS NOT NULL";
+
+	$stmt = sqlsrv_query( $conn, $tsql );
+
+	if( $stmt === false ){
+		die ("Error al ejecutar consulta");
+	}
+
+	$rows = sqlsrv_has_rows( $stmt );
+
+	if ($rows === true){						
+		print ("<table border='1' bordercolor='black'>\n");
+		print ("<tr aling='center' >\n");
+		print ("<th bgcolor='#EAA724'>Id_FDTT</th>\n");
+		print ("<th bgcolor='#EAA724'>ESTADO_GIS</th>\n");
+		print ("</tr>\n");		
+		while($row = sqlsrv_fetch_array($stmt)){
+			print ("<tr>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['Id_FDTT'] . "</b></td>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['ESTADO_GIS'] . "</b></td>\n");
+			print ("</tr>\n");
+		}				
+			print ("</table>\n");		
+	}
+	sqlsrv_free_stmt( $stmt);
+	sqlsrv_close( $conn);
+}
+
+if ($solicitud === 'DESCARGA_TAREAS') {
+	$conn=conectar_bd();
+
+	$tsql=$_SESSION['TSQL_INCIDENCIAS'];
+
+	$stmt = sqlsrv_query( $conn, $tsql );
+
+	if( $stmt === false ){
+		die ("Error al ejecutar consulta");
+	}
+
+	$rows = sqlsrv_has_rows( $stmt );
+
+	if ($rows === true){						
+		print ("<table border='1' bordercolor='black'>\n");
+		print ("<tr aling='center' >\n");
+		print ("<th bgcolor='#EAA724'>PROV.</th>\n");
+		print ("<th bgcolor='#EAA724'>CABEC.</th>\n");
+		print ("<th bgcolor='#EAA724'>ID_ACT</th>\n");
+		print ("<th bgcolor='#EAA724'>AC_JAZZTEL</th>\n");
+		print ("<th bgcolor='#EAA724'>AC_TESA</th>\n");
+		print ("<th bgcolor='#EAA724'>REMEDY</th>\n");
+		print ("<th bgcolor='#EAA724'>REFERENCIA</th>\n");
+		print ("<th bgcolor='#EAA724'>OCEAN</th>\n");
+		print ("<th bgcolor='#EAA724'>ESCALADO</th>\n");
+		print ("<th bgcolor='#EAA724'>ACTIVIDAD</th>\n");
+		print ("<th bgcolor='#EAA724'>SUBACTIVIDAD</th>\n");
+		print ("<th bgcolor='#EAA724'>SOLICITANTE</th>\n");
+		print ("<th bgcolor='#EAA724'>TECNICO</th>\n");
+		print ("<th bgcolor='#EAA724'>F.REGIS.</th>\n");
+		print ("<th bgcolor='#EAA724'>F.RESOL.</th>\n");
+		print ("<th bgcolor='#EAA724'>ESTADO</th>\n");
+		print ("<th bgcolor='#EAA724'>P</th>\n");
+
+
+
+
+		print ("</tr>\n");		
+		while($row = sqlsrv_fetch_array($stmt)){
+			print ("<tr>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['PROVINCIA'] . "</b></td>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['CABECERA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ID_ACTUACION'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACT_JAZZTEL'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACT_TESA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['REMEDY'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['REF_TBTAREA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['OCEANE_TBTAREA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ESCALADO_TBTAREA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['Actividad'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['SUBACTIVIDAD'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['USUORIGEN'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['TECNICO'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . date_format($row['FECHA_REGISTRO'], 'Y-m-d') . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . date_format($row['FECHA_RESOL'], 'Y-m-d') . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['Estado'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['PRIORIDAD'] . "</b></td>\n");
+
+
+			print ("</tr>\n");
+		}				
+			print ("</table>\n");		
+	}
+	sqlsrv_free_stmt( $stmt);
+	sqlsrv_close( $conn);
+}
+
+if ($solicitud === 'Informe_general') {
+	$conn=conectar_bd();
+
+	$tsql = "SELECT REF,inv_tbtareas.HUELLA,PROVINCIA,CABECERA,ACT_JAZZTEL,REMEDY,TICKET_OCEANE,ESCALADO,Estado,Actividad,SUBACTIVIDAD,TECNICO,USUORIGEN,inv_tbtareas.FECHA_INICIO,inv_tbtareas.FECHA_REGISTRO,inv_tbtareas.FECHA_RESOL
+ 				FROM INV_TBTAREAS
+				LEFT JOIN INV_VIEW_DATOS_TODO ON INV_VIEW_DATOS_TODO.ID_TAREA = INV_TBTAREAS.ID";
+
+	$stmt = sqlsrv_query( $conn, $tsql );
+
+	if( $stmt === false ){
+		die ("Error al ejecutar consulta");
+	}
+
+	$rows = sqlsrv_has_rows( $stmt );
+
+	//if ($rows === true){						
+		print ("<table border='1' bordercolor='black'>\n");
+		print ("<tr aling='center' >\n");
+		print ("<th bgcolor='#EAA724'>REFERENCIA</th>\n");
+		print ("<th bgcolor='#EAA724'>HUELLA</th>\n");
+		print ("<th bgcolor='#EAA724'>PROVINCIA</th>\n");
+		print ("<th bgcolor='#EAA724'>CABECERA</th>\n");
+		print ("<th bgcolor='#EAA724'>ACT_JAZZTEL</th>\n");
+		print ("<th bgcolor='#EAA724'>CABECERA_RA</th>\n");
+		print ("<th bgcolor='#EAA724'>REMEDY</th>\n");
+		print ("<th bgcolor='#EAA724'>TICKET_OCEANE</th>\n");
+		print ("<th bgcolor='#EAA724'>ESCALADO</th>\n");
+		print ("<th bgcolor='#EAA724'>Estado</th>\n");
+		print ("<th bgcolor='#EAA724'>Actividad</th>\n");		
+		print ("<th bgcolor='#EAA724'>SUBACTIVIDAD</th>\n");						
+		print ("<th bgcolor='#EAA724'>TECNICO</th>\n");
+		print ("<th bgcolor='#EAA724'>SOLICITANTE</th>\n");		
+		print ("<th bgcolor='#EAA724'>FECHA_INICIO</th>\n");						
+		print ("<th bgcolor='#EAA724'>FFECHA_REGISTRO</th>\n");
+		print ("<th bgcolor='#EAA724'>FECHA_RESOLUCION</th>\n");				
+		print ("</tr>\n");		
+		while($row = sqlsrv_fetch_array($stmt)){
+			print ("<tr>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['REF'] . "</b></td>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['HUELLA'] . "</b></td>\n");			
+			print ("<td bgcolor='#FAE187'><b>" . $row['PROVINCIA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['CABECERA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACT_JAZZTEL'] . "</b></td>\n");					
+			print ("<td bgcolor='#FAE187'><b>" . $row['CABECERA_RA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['REMEDY'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['TICKET_OCEANE'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['ESCALADO'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['Estado'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['Actividad'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['SUBACTIVIDAD'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['TECNICO'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['USUORIGEN'] . "</b></td>\n");			
+
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_INICIO'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_REGISTRO'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_RESOL'], 'd/m/Y') . "</td>\n");
+
+			print ("</tr>\n");
+		}				
+			print ("</table>\n");		
+	//}
+	sqlsrv_free_stmt( $stmt);
+	sqlsrv_close( $conn);
+}
+
+
+if ($solicitud === 'Saturadas') {
+	$conn=conectar_bd();
+
+	$tsql = "SELECT REF,CTO_NUEVA,inv_tbtareas.HUELLA,PROVINCIA,CABECERA,ACT_JAZZTEL,REMEDY,TICKET_OCEANE,ESCALADO,Estado,Actividad,SUBACTIVIDAD,TECNICO,USUORIGEN,inv_tbtareas.FECHA_INICIO,inv_tbtareas.FECHA_REGISTRO,inv_tbtareas.FECHA_RESOL
+ 				FROM INV_TBTAREAS
+				LEFT JOIN INV_VIEW_DATOS_TODO ON INV_VIEW_DATOS_TODO.ID_TAREA = INV_TBTAREAS.ID
+				WHERE (Actividad='General' AND SUBACTIVIDAD='Seguimiento Ampliaciones CTOS Saturadas') or (Actividad='Modificaciones RED Existente' AND SUBACTIVIDAD='Rediseño de RED') or (Actividad='Modificaciones RED Existente' AND SUBACTIVIDAD='Ampl. de red-CTOS saturadas')";
+
+	$stmt = sqlsrv_query( $conn, $tsql );
+
+	if( $stmt === false ){
+		die ("Error al ejecutar consulta");
+	}
+
+	$rows = sqlsrv_has_rows( $stmt );
+
+ //if ($rows === true){						
+		print ("<table border='1' bordercolor='black'>\n");
+		print ("<tr aling='center' >\n");
+		print ("<th bgcolor='#EAA724'>REFERENCIA</th>\n");
+		print ("<th bgcolor='#EAA724'>CTO</th>\n");
+		print ("<th bgcolor='#EAA724'>HUELLA</th>\n");
+		print ("<th bgcolor='#EAA724'>PROVINCIA</th>\n");
+		print ("<th bgcolor='#EAA724'>CABECERA</th>\n");
+		print ("<th bgcolor='#EAA724'>ACT_JAZZTEL</th>\n");
+		print ("<th bgcolor='#EAA724'>REMEDY</th>\n");
+		print ("<th bgcolor='#EAA724'>TICKET_OCEANE</th>\n");
+		print ("<th bgcolor='#EAA724'>ESCALADO</th>\n");
+		print ("<th bgcolor='#EAA724'>Estado</th>\n");
+		print ("<th bgcolor='#EAA724'>Actividad</th>\n");		
+		print ("<th bgcolor='#EAA724'>SUBACTIVIDAD</th>\n");						
+		print ("<th bgcolor='#EAA724'>TECNICO</th>\n");
+		print ("<th bgcolor='#EAA724'>SOLICITANTE</th>\n");		
+		print ("<th bgcolor='#EAA724'>FECHA_INICIO</th>\n");						
+		print ("<th bgcolor='#EAA724'>FECHA_REGISTRO</th>\n");
+		print ("<th bgcolor='#EAA724'>FECHA_RESOLUCION</th>\n");				
+		print ("</tr>\n");		
+		while($row = sqlsrv_fetch_array($stmt)){
+			print ("<tr>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['REF'] . "</b></td>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['CTO_NUEVA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['HUELLA'] . "</b></td>\n");			
+			print ("<td bgcolor='#FAE187'><b>" . $row['PROVINCIA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['CABECERA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACT_JAZZTEL'] . "</b></td>\n");					
+			print ("<td bgcolor='#FAE187'><b>" . $row['CABECERA_RA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['REMEDY'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['TICKET_OCEANE'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['ESCALADO'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['Estado'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['Actividad'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['SUBACTIVIDAD'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['TECNICO'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['USUORIGEN'] . "</b></td>\n");			
+
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_INICIO'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_REGISTRO'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_RESOL'], 'd/m/Y') . "</td>\n");
+
+			print ("</tr>\n");
+	 }				
+			print ("</table>\n");		
+	//}
+	sqlsrv_free_stmt( $stmt);
+	sqlsrv_close( $conn);
+}
+
+
+if ($solicitud === 'Bloqueos/Desbloqueos') {
+	$conn=conectar_bd();
+
+	$tsql = "SELECT REF,GESTOR,PROVINCIA,CABECERA,ACT_JAZZTEL,REMEDY,Estado,Actividad,SUBACTIVIDAD,TECNICO,inv_tbtareas.FECHA_INICIO,inv_tbtareas.FECHA_REGISTRO,inv_tbtareas.FECHA_RESOL,CTO_NUEVA,INV_TBTAREAS.HUELLA, COMENTARIOS,COMENTARIOS2
+ 				FROM INV_TBTAREAS
+				LEFT JOIN INV_VIEW_DATOS_TODO ON INV_VIEW_DATOS_TODO.ID_TAREA = INV_TBTAREAS.ID
+				WHERE Actividad='Bloqueo Cobertura'  or Actividad='Desbloqueo Cobertura'";
+
+	$stmt = sqlsrv_query( $conn, $tsql );
+
+	if( $stmt === false ){
+		die ("Error al ejecutar consulta");
+	}
+
+	$rows = sqlsrv_has_rows( $stmt );
+
+	//if ($rows === true){						
+		print ("<table border='1' bordercolor='black'>\n");
+		print ("<tr aling='center' >\n");
+		print ("<th bgcolor='#EAA724'>REFERENCIA</th>\n");
+		print ("<th bgcolor='#EAA724'>GESTOR</th>\n");
+		print ("<th bgcolor='#EAA724'>PROVINCIA</th>\n");
+		print ("<th bgcolor='#EAA724'>CABECERA</th>\n");
+		print ("<th bgcolor='#EAA724'>ACT_JAZZTEL</th>\n");
+		print ("<th bgcolor='#EAA724'>REMEDY</th>\n");
+		print ("<th bgcolor='#EAA724'>Estado</th>\n");
+		print ("<th bgcolor='#EAA724'>Actividad</th>\n");		
+		print ("<th bgcolor='#EAA724'>SUBACTIVIDAD</th>\n");						
+		print ("<th bgcolor='#EAA724'>TECNICO</th>\n");
+		print ("<th bgcolor='#EAA724'>FECHA_INICIO</th>\n");						
+		print ("<th bgcolor='#EAA724'>FECHA_REGISTRO</th>\n");
+		print ("<th bgcolor='#EAA724'>FECHA_RESOLUCION</th>\n");
+		print ("<th bgcolor='#EAA724'>CTO</th>\n");
+		print ("<th bgcolor='#EAA724'>HUELLA</th>\n");
+		print ("<th bgcolor='#EAA724'>COMENTARIOS</th>\n");	
+		print ("<th bgcolor='#EAA724'>COMENTARIOS2</th>\n");					
+		print ("</tr>\n");		
+		while($row = sqlsrv_fetch_array($stmt)){
+			print ("<tr>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['REF'] . "</b></td>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['GESTOR'] . "</b></td>\n");			
+			print ("<td bgcolor='#FAE187'><b>" . $row['PROVINCIA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['CABECERA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['ACT_JAZZTEL'] . "</b></td>\n");					
+			print ("<td bgcolor='#FAE187'><b>" . $row['REMEDY'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['Estado'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['Actividad'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'>" . $row['SUBACTIVIDAD'] . "</td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['TECNICO'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_INICIO'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_REGISTRO'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_RESOL'], 'd/m/Y') . "</td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['CTO_NUEVA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['HUELLA'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['COMENTARIOS'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['COMENTARIOS2'] . "</b></td>\n");
+			print ("</tr>\n");
+		}				
+			print ("</table>\n");		
+	//}
+	sqlsrv_free_stmt( $stmt);
+	sqlsrv_close( $conn);
+}
+
+
+
+?>
+</body>
+</html>
