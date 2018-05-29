@@ -323,7 +323,7 @@ function insertarTareaRemedy($row, $ref_asociada, $anioMesCargaOceane, $anioMesC
         if($tipo_incidencia=='PROACTIVA'){
            // echo ("ES PROACTIVA");
             //echo ("Buscamos la subactivad: " . $subactividad1);
-            echo ("el concatenado es: " . $concatenado );
+           // echo ("el concatenado es: " . $concatenado );
            //if ($subactividad1 == 'RED OSP'){
              //  $subactividad = 141;
 
@@ -398,7 +398,7 @@ function insertarTareaRemedy($row, $ref_asociada, $anioMesCargaOceane, $anioMesC
            // if ($subactividad1 == 'RED OSP'){
              //  $subactividad = 124;
 
-        	 echo ("el concatenado es: " . $concatenado );
+        	 //echo ("el concatenado es: " . $concatenado );
         		if ($concatenado  == 'RED OSP-MODIFICACION PEX-AMPLIACION RED'){
 				$subactividad = 108;
 				} else {
@@ -463,11 +463,13 @@ function insertarTareaRemedy($row, $ref_asociada, $anioMesCargaOceane, $anioMesC
 			}
                
         
-        if (empty($subactividad)){
+        if (empty($subactividad) and INV_TBSUBACTIVIDAD.id_Actividad=32){
             
             
-            $subactividad=1004;
+            $subactividad=1003;
         }
+        else
+        	$subactividad=1004;
         
         //echo ("la subactividad es: " . $subactividad );
         //echo '<br />';
