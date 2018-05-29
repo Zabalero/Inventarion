@@ -463,13 +463,11 @@ function insertarTareaRemedy($row, $ref_asociada, $anioMesCargaOceane, $anioMesC
 			}
                
         
-        if (empty($subactividad) and INV_TBSUBACTIVIDAD.id_Actividad=32){
+        if (empty($subactividad){
             
             
-            $subactividad=1003;
-        }
-        else
-        	$subactividad=1004;
+            $subactividad=1004;
+    }
         
         //echo ("la subactividad es: " . $subactividad );
         //echo '<br />';
