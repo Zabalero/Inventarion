@@ -330,7 +330,7 @@ $resultado = sqlsrv_query($conn, $sql);
 
 sqlsrv_next_result($resultado);
 sqlsrv_fetch($resultado);
-$id_Tarea_insertado=sqlsrv_get_field($resultado, 31);
+$id_Tarea_insertado=sqlsrv_get_field($resultado, 0);
 
 if( $resultado === false ) {
 $ctrl_error=true;
