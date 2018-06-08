@@ -373,9 +373,8 @@ function insertarTareaRemedy($row, $ref_asociada, $anioMesCargaOceane, $anioMesC
 	                																				if ($rows2 === true) {					
 
 	                   																			 	$rows2 = sqlsrv_fetch_array($stmt3);
-	                    																		 	$subactividad=$rows2['id_Subactividad'];	
-
-	                																									}
+	                    																		 	$subactividad=$rows2['id_Subactividad'];
+	                    																		 						}                																									
 	            
            																								}
 
@@ -462,17 +461,14 @@ function insertarTareaRemedy($row, $ref_asociada, $anioMesCargaOceane, $anioMesC
 					}														
 			}
                
-        
-             
-        if (empty($subactividad)){	
-        		if($rows2['id_Actividad']=31)  {       
-            
-            $subactividad=1004;}
-            	else{
-            	$subactividad=1003;	
-            	}
-    }
-        
+    
+	if (empty($subactividad)){	
+		if($tipo_incidencia=='PROACTIVA'){
+			$subactividad=1003;}   
+				else{
+					$subactividad=1004;
+			}}
+       
         //echo ("la subactividad es: " . $subactividad );
         //echo '<br />';
 
