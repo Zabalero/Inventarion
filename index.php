@@ -1,21 +1,20 @@
 <?php
-session_start ();
-header ( "Cache-control: private" );
-$_SESSION ['detalle'] = "TRUE";
+	session_start();
+	header("Cache-control: private");
+	$_SESSION['detalle']="TRUE"; 
 
-require_once "inc/theme.inc";
-require "inc/funciones.inc";
+	require_once "inc/theme.inc";
+	require "inc/funciones.inc";
+      
+	//Conectar con el servidor de base de datos
+	$conn=conectar_bd();
 
-// Conectar con el servidor de base de datos
-$conn = conectar_bd ();
+	$mensaje = "";
+	$mensaje = $_REQUEST['mensaje'];
+	
+	// print the page header
+	print_theme_header();
 
-// Comentario prueba
-$mensaje = "";
-
-$mensaje = $_REQUEST ['mensaje'];
-
-// print the page header
-print_theme_header ();
 
 ?>
 			<!-- start: Content -->
@@ -74,10 +73,7 @@ print_theme_header ();
 					<div class="alert alert-block">
 							<button type="button" class="close" data-dismiss="alert">×</button>
 							<h4 class="alert-heading">Warning!</h4>
-							<?php
-							
-echo "<p>" . $mensaje . "</p>";
-							?>
+							<?php echo "<p>".$mensaje."</p>";?>
 					</div>					
 				</div>						
 
@@ -98,7 +94,7 @@ echo "<p>" . $mensaje . "</p>";
 <div class="clearfix"></div>	
 
 <?php
-print_theme_footer ();
+	print_theme_footer();
 ?>
 <script>      
     $('#a_resetPassword').click(

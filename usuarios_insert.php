@@ -59,7 +59,8 @@
                         ,[Inhabilitado]
                         ,[idResponsable]
                         ,[Telefono]
-                        ,[password])
+                        ,[password]
+                        ,[id_usu])
                   VALUES
                         ({$idGrupo}
                         ,{$idDpto}
@@ -71,7 +72,9 @@
                         ,{$Inhabilitado}
                         ,{$idResponsable}
                         ,'{$Telefono}'"
-                        . ",'{$password}')";
+                        . ",'{$password}'
+                        , CAST ( ( (select max(id_usu) from INV_tbUSUARIOS) +1) as INT)
+                        )";
 
 
 	    $resultado = sqlsrv_query($conn, $tsql);
