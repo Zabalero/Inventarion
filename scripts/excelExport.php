@@ -410,7 +410,7 @@ if ($solicitud === 'Informe_general') {
 if ($solicitud === 'Saturadas') {
 	$conn=conectar_bd();
 
-	$tsql = "SELECT D.NUMERO as NUMERO,REF,
+	$tsql = "SELECT D.NUMERO as NUMERO,CTO_NUEVA,REF,
 		inv_tbTareas.id AS ID_TAREA,
                 inv_tbtareas.HUELLA,
                 PROVINCIA,
@@ -444,6 +444,7 @@ if ($solicitud === 'Saturadas') {
 		print ("<table border='1' bordercolor='black'>\n");
 		print ("<tr aling='center' >\n");
 		print ("<th bgcolor='#EAA724'>CTO</th>\n");
+		print ("<th bgcolor='#EAA724'>CTO_NUEVA</th>\n");
 		print ("<th bgcolor='#EAA724'>REFERENCIA</th>\n");
 		print ("<th bgcolor='#EAA724'>HUELLA</th>\n");
 		print ("<th bgcolor='#EAA724'>PROVINCIA</th>\n");
@@ -459,11 +460,11 @@ if ($solicitud === 'Saturadas') {
 		print ("<th bgcolor='#EAA724'>TECNICO</th>\n");
 		print ("<th bgcolor='#EAA724'>SOLICITANTE</th>\n");	
 		print ("<th bgcolor='#EAA724'>TIPO_INCIDENCIA</th>\n");		
-		print ("<th bgcolor='#EAA724'>FECHA_INICIO</th>\n");						
 		print ("<th bgcolor='#EAA724'>FECHA_REGISTRO</th>\n");
+		print ("<th bgcolor='#EAA724'>FECHA_INICIO</th>\n");
+		print ("<th bgcolor='#EAA724'>FECHA_CONSTRUCCIÓN</th>\n");
 		print ("<th bgcolor='#EAA724'>FECHA_RESOLUCION</th>\n");				
-                print ("<th bgcolor='#EAA724'>FECHA_CONSTRUCCIÓN</th>\n");	
-		print ("</tr>\n");		
+        print ("</tr>\n");		
 		while($row = sqlsrv_fetch_array($stmt)){
                     
                       $tsql2 = "select FECHA_CAMBIO from inv_historico_tareas where ID_ESTADO_NEW = '8' AND ID_TAREA = '" .  $row['ID_TAREA'] ."'" ;
@@ -481,7 +482,8 @@ if ($solicitud === 'Saturadas') {
 
 
 			print ("<tr>\n");	
-			print ("<td bgcolor='#FAE187'><b>" . $row['NUMERO'] . "</b></td>\n");	
+			print ("<td bgcolor='#FAE187'><b>" . $row['NUMERO'] . "</b></td>\n");
+			print ("<td bgcolor='#FAE187'><b>" . $row['CTO_NUEVA'] . "</b></td>\n");		
 			print ("<td bgcolor='#FAE187'><b>=texto(" . $row['REF'] . ";00000)</b></td>\n");	
 			print ("<td bgcolor='#FAE187'><b>" . $row['HUELLA'] . "</b></td>\n");			
 			print ("<td bgcolor='#FAE187'><b>" . $row['PROVINCIA'] . "</b></td>\n");
@@ -497,10 +499,11 @@ if ($solicitud === 'Saturadas') {
 			print ("<td bgcolor='#FAE187'><b>" . $row['TECNICO'] . "</b></td>\n");
 			print ("<td bgcolor='#FAE187'><b>" . $row['USUORIGEN'] . "</b></td>\n");			
 			print ("<td bgcolor='#FAE187'><b>" . $row['TIPO_INCIDENCIA'] . "</b></td>\n");
-			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_INICIO'],  'd/m/Y H:i:s') . "</td>\n");
 			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_REGISTRO'], 'd/m/Y H:i:s') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_INICIO'],  'd/m/Y H:i:s') . "</td>\n");
+			print ("<td bgcolor='#FAE187'>" . date_format($row2['FECHA_CAMBIO'], 'd/m/Y H:i:s') . "</td>\n");
 			print ("<td bgcolor='#FAE187'>" . date_format($row['FECHA_RESOL'], 'd/m/Y H:i:s') . "</td>\n");
-                        print ("<td bgcolor='#FAE187'>" . date_format($row2['FECHA_CAMBIO'], 'd/m/Y H:i:s') . "</td>\n");
+                        
 			print ("</tr>\n");
                         sqlsrv_free_stmt( $stmt2);
 	 }				

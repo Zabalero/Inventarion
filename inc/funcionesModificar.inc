@@ -195,9 +195,9 @@ function modificarTarea($conn, $id, $comentarios=""){
 				sqlsrv_free_stmt($resultadoFunc);		
 
 				//Borra las CTOS asociadas a la tarea, para actualizarlas con las nuevas introducidas
-				$tsqlFunc ="DELETE FROM INV_TBTAREAS_CTO WHERE id='".$id."'";  
-				$resultadoFunc = sqlsrv_query( $conn, $tsqlFunc);
-				sqlsrv_free_stmt( $resultadoFunc);	
+				//$tsqlFunc ="DELETE FROM INV_TBTAREAS_CTO WHERE id='".$id."'";  
+				//$resultadoFunc = sqlsrv_query( $conn, $tsqlFunc);
+				//sqlsrv_free_stmt( $resultadoFunc);	
 
 				//CTOS ASOCIADAS
 				if ($_POST['MARCAR'] == ''){	
