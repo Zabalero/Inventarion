@@ -1750,8 +1750,11 @@ print_theme_header ();
 																$tsql7 = $tsql7 . " INV_tbTareas_CTO ON INV_tbTareas.id = INV_tbTareas_CTO.id INNER JOIN";
 																$tsql7 = $tsql7 . " INV_tbSubactividad ON INV_tbTareas.id_Subactividad = INV_tbSubactividad.id_Subactividad INNER JOIN";
 																$tsql7 = $tsql7 . " INV_tbTareas_Bloqueos ON INV_tbTareas.id = INV_tbTareas_Bloqueos.id_Tarea";
-																$tsql7 = $tsql7 . " WHERE(INV_tbTareas_Bloqueos.Tipo_Afectacion = 1) AND (INV_tbTareas.idEst != 6)AND ";
-																$tsql7 = $tsql7 . " (INV_tbSubactividad.id_Actividad = 4)  AND INV_tbTareas_CTO.COD_CTO='" . $cto ['COD_CTO'] . "'";
+																$tsql7 = $tsql7 . " WHERE(INV_tbTareas_Bloqueos.Tipo_Afectacion = 1) AND (INV_tbTareas.idEst = 1 OR";
+																$tsql7 = $tsql7 . " INV_tbTareas.idEst = 2 OR";
+																$tsql7 = $tsql7 . " INV_tbTareas.idEst = 3 OR";
+																$tsql7 = $tsql7 . " INV_tbTareas.idEst = 5) AND (INV_tbSubactividad.id_Actividad = 4)  AND INV_tbTareas_CTO.COD_CTO='" . $cto ['COD_CTO'] . "'";
+																
 																$stmt7 = sqlsrv_query ( $conn, $tsql7 ) or die ( "Error al ejecutar consulta: " . $tsql7 );
 																$rows7 = sqlsrv_has_rows ( $stmt7 );
 																
@@ -1779,8 +1782,11 @@ print_theme_header ();
 																	$tsql7 = $tsql7 . " INV_tbTareas_CTO ON INV_tbTareas.id = INV_tbTareas_CTO.id INNER JOIN";
 																	$tsql7 = $tsql7 . " INV_tbSubactividad ON INV_tbTareas.id_Subactividad = INV_tbSubactividad.id_Subactividad INNER JOIN";
 																	$tsql7 = $tsql7 . " INV_tbTareas_Desbloqueos ON INV_tbTareas.id = INV_tbTareas_Desbloqueos.id_Tarea";
-																	$tsql7 = $tsql7 . " WHERE(INV_tbTareas_Desbloqueos.Tipo_Afectacion = 1) AND (INV_tbTareas.idEst != 5) AND";
-																	$tsql7 = $tsql7 . " (INV_tbSubactividad.id_Actividad = 5)  AND INV_tbTareas_CTO.COD_CTO='" . $cto ['COD_CTO'] . "'";
+																	$tsql7 = $tsql7 . " WHERE(INV_tbTareas_Desbloqueos.Tipo_Afectacion = 1) AND (INV_tbTareas.idEst = 1 OR";
+																	$tsql7 = $tsql7 . " INV_tbTareas.idEst = 2 OR";
+																	$tsql7 = $tsql7 . " INV_tbTareas.idEst = 3 OR";
+																	$tsql7 = $tsql7 . " INV_tbTareas.idEst = 6) AND (INV_tbSubactividad.id_Actividad = 5)  AND INV_tbTareas_CTO.COD_CTO='" . $cto ['COD_CTO'] . "'";
+																	
 																	$stmt7 = sqlsrv_query ( $conn, $tsql7 ) or die ( "Error al ejecutar consulta: " . $tsql7 );
 																	$rows7 = sqlsrv_has_rows ( $stmt7 );
 																	
