@@ -298,7 +298,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			$id_grupo_u = $registro_u ['id_grupo'];
 			$des_grupo_u = utf8_decode ( $registro_u ['des_grupo'] );
 			
-			if ($registro_u ['' . 'mail_usuorigen'] != "" && $registro_u ['mail_usuorigen'] != NULL && $registro_u ['mail_usuorigen'] != "NULL") {
+			if ($registro_u ['' . '_usuorigen'] != "" && $registro_u ['mail_usuorigen'] != NULL && $registro_u ['mail_usuorigen'] != "NULL") {
 				$mail_usuorigen = $registro_u ['mail_usuorigen'];
 			}
 			if ($registro_u ['mail_responsable'] != "" && $registro_u ['mail_responsable'] != NULL && $registro_u ['mail_responsable'] != "NULL") {
@@ -445,23 +445,6 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 		} else {
 			$mailResponsableUsuOrigen = '';
 		}
-
-		// Obtener mail del Regional
-		sqlsrv_free_stmt ( $stmt );
-		$tsql = "SELECT inv_provincias.Regional from inv_provincias where inv_provincias.Descripcion='" . $provincia .	"'";
-		//echo $provincia;
-		$stmt = sqlsrv_query ( $conn, $tsql ) or die ( "Fallo en la consulta del Regional" );
-		$rows = sqlsrv_has_rows ( $stmt );
-		if ($rows === true) {
-			while ( $row = sqlsrv_fetch_array ( $stmt ) ) {
-				if ($row ["Regional"] != '') {
-					$mailRegional = $row ["Regional"];
-				}
-			}
-		} else {
-			$mailRegional = '';
-		}
-
 		
 		// Cuerpo mensaje
 		$cuerpo = '
@@ -804,9 +787,9 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 		
 		$headers = "From: $nombreST <$mailST>\r\n" . "MIME-Version: 1.0" . "\r\n" . "Content-type: text/html; charset=UTF-8" . "\r\n";
 		if ($mailUsu != "" && $mailUsu != NULL && $mailUsu != "NULL") {
-			$destinatarios_mail = $mailST . ", " . $mailUsu . ", " . $mail_responsable . ", " . $mail_usuorigen . ", " . $mailRegional . ", " . $mailResponsableUsuOrigen;
+			$destinatarios_mail = $mailST . ", " . $mailUsu . ", " . $mailAnaM . ", " . $mail_responsable . ", " . $mail_usuorigen . ", " . $mailResponsableUsuOrigen;
 		} else {
-			$destinatarios_mail = $mailST . ", " . $mail_responsable . ", " . $mailRegional .", " . $mail_usuorigen;
+			$destinatarios_mail = $mailST . ", " . $mailAnaM . ", " . $mail_responsable . ", " . $mail_usuorigen;
 		}
 		$destinatarios_mail = str_replace ( ", , , ,", ",", $destinatarios_mail );
 		$destinatarios_mail = str_replace ( ", , ,", ",", $destinatarios_mail );
