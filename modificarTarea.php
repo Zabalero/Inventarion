@@ -481,6 +481,10 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 				case 1 : // pendiente
 					$estado = 'Pendiente';
 					break;
+
+				case 2 : // En Proceso
+					$estado = 'En Proceso';
+					break;
 				
 				case 4 : // cerrada
 					$estado = 'Cerrada';
@@ -502,6 +506,9 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 					break;
 				case 11 : // Pendiente de Ingeniería
 					$estado = 'Pendiente de Ingeniería';
+					break;
+				case 12 : // Cancelada
+					$estado = 'Cancelada';
 					break;
 				case 5 : // Pte bloqueo
 					$estado = 'Pendiente de bloqueo';
@@ -548,6 +555,22 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 		
 		if (isset ( $comentarios2 ) && $comentarios2 != "") {
 			switch ($selected_cambioEst) {
+				
+
+				case 1 : // Pendiente
+					$cuerpo = $cuerpo . '
+                                                                            <span style="font-style: italic">Comentarios:</span></br>
+                                                                            <span style="color: #103A7D"><pre>' . $comentarios2 . '</pre></span></p>								
+                                                            ';
+					
+					break;
+				case 2 : // En Proceso
+					$cuerpo = $cuerpo . '
+                                                                            <span style="font-style: italic">Comentarios:</span></br>
+                                                                            <span style="color: #103A7D"><pre>' . $comentarios2 . '</pre></span></p>								
+                                                            ';
+					
+					break;
 				case 4 : // cerrada
 					$cuerpo = $cuerpo . '
                                                                             <span style="font-style: italic">Comentarios:</span></br>
@@ -661,21 +684,21 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			$cuerpo = $cuerpo . '</br>';
 		} // Fin For
 		
-		$listaComentarios = explode ( '*', $comentarios );
-		$cuerpo = $cuerpo . '<p><strong>COMENTARIOS:</strong></p>';
+	//	$listaComentarios = explode ( '*', $comentarios );
+	//	$cuerpo = $cuerpo . '<p><strong>COMENTARIOS:</strong></p>';
 		
-		foreach ( $listaComentarios as $comentario ) {
-			$listaSubComentarios = explode ( '-', $comentario );
-			foreach ( $listaSubComentarios as $subComentario ) {
-				if ($subComentario !== '') {
-					if (strpos ( $subComentario, ' Se ha grabado la Tarea' ) !== false) {
-						$cuerpo = $cuerpo . '<span>*' . $subComentario . '</span></br>';
-					} else {
-						$cuerpo = $cuerpo . "<span style='padding-left:1.3em'>-" . $subComentario . "</span></br>";
-					}
-				}
-			}
-		}
+	//	foreach ( $listaComentarios as $comentario ) {
+	//		$listaSubComentarios = explode ( '-', $comentario );
+	//		foreach ( $listaSubComentarios as $subComentario ) {
+	//			if ($subComentario !== '') {
+	//				if (strpos ( $subComentario, ' Se ha grabado la Tarea' ) !== false) {
+	//					$cuerpo = $cuerpo . '<span>*' . $subComentario . '</span></br>';
+	//				} else {
+	//					$cuerpo = $cuerpo . "<span style='padding-left:1.3em'>-" . $subComentario . "</span></br>";
+	//				}
+	//			}
+	//		}
+	//	}
 		
 		$cuerpo = $cuerpo . '<p>Un saludo</p>
 
