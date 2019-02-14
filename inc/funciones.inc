@@ -2,7 +2,7 @@
 // Establece una conexión con la base de datos
 function conectar_bd(){
 	/* Nombre del servidor. */
-	$serverName = "10.1.56.102";
+	$serverName = "MXMESCF02";
       //$serverName = "192.168.31.50";
 
 	/* Usuario y clave.  */

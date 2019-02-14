@@ -48,6 +48,39 @@ function modificarTarea($conn, $id, $comentarios=""){
 
         //echo $id;exit();
 	if ($id != '') {
+
+
+//cogemos la actuacion y sacamos el ID_ACTUACION
+		$actJazz=$_POST['actJazz'];
+
+
+
+		//return $actJazz;
+
+		$tsqlFunc0 = "SELECT top 1 ID_ACTUACION
+				FROM INV_actuaciones where ACT_JAZZTEL= '".$actJazz."'"; 
+
+				$resultadoFunc0  = sqlsrv_query($conn, $tsqlFunc0);
+		
+				if( $resultadoFunc0  === false ) {
+	  					die( print_r( sqlsrv_errors(), true));
+					} else {
+							$id_actuacion = sqlsrv_fetch_array($resultadoFunc0 );
+		}	
+
+					sqlsrv_free_stmt($resultadoFunc0);	
+
+				//	return $id_actuacion['ID_ACTUACION'];
+
+	//actualizamos la id_actuacion de tbareas
+
+		$tsqlFunc1 = "UPDATE inv_tbtareas  set id_Actuacion=".$id_actuacion['ID_ACTUACION']."  WHERE ID =$id";
+
+					//return $tsqlFunc1;
+			$resultadoFunc1 = sqlsrv_query($conn, $tsqlFunc1);
+
+			sqlsrv_free_stmt($resultadoFunc1);	
+///////////////
 		
 	 	$tsqlFunc = "SELECT *
 				FROM INV_TBTAREAS
@@ -107,28 +140,45 @@ function modificarTarea($conn, $id, $comentarios=""){
 				return "La incidencia Remedy debe ser numérica";
 
 			}
-
-			if (preg_match('/[A-Z,0-9]{10}/', $_POST['TICKET_OCEANE']) || $_POST['TICKET_OCEANE'] == '') {	
+                        
+                       
+                        if ((ctype_alnum($_POST['TICKET_OCEANE']) && strlen($_POST['TICKET_OCEANE'])==10) || $_POST['TICKET_OCEANE'] == '') {	
 				$ticket_oceane = $_POST['TICKET_OCEANE'];
-			} else {
+                        } else {
 				return "Ticket Oceane con formato erróneo"; //AAMMXXXXXX
 
+                        }
+                        if ((ctype_alnum($_POST['SUC']) && strlen($_POST['SUC'])==21) || $_POST['SUC'] == '') {	
+				$suc = $_POST['SUC'];
+                        } else {
+				//echo ("Entra en else"); exit();
+                                return "SUC con formato erróneo"; //AAMMXXXXXX
 
-			if (preg_match('/[A-Z]{16}[0-9]{16}/', $_POST['TICKET_ESCALADO']) || $_POST['TICKET_ESCALADO'] == '') {	
+                        }
+                        
+                        $ticket_escalado = $_POST['TICKET_ESCALADO'];
+			/*if (preg_match('/[A-Z]{16}[0-9]{16}/', $_POST['TICKET_ESCALADO']) || $_POST['TICKET_ESCALADO'] == '') {	
 				$ticket_escalado = $_POST['TICKET_ESCALADO'];
 			} else {
 				return "escalado a terceros:texto muy largo"; //tamao 16
 
-			}
-			}
+			}*/
+			
 
 			
 			if (preg_match('/[A-Z]{2}[0-9]{10}/', $_POST['TP']) || $_POST['TP'] == '') {	
 				$ticket_tp = $_POST['TP'];
+                               
 			} else {
 				return "TP con formato erróneo"; //PPAAAAMMYYYY
 
-			}				
+			}	
+                        //Validar que si el estado está en construcción, el campo Ticket Remedy tiene que estar informado
+                        if ($registroFunc['idEst'] == '8'){
+                            if ($_POST['INCIDENCIA'] == ''){
+                                return "Si está en estado Construcción debe informar el campo Ticket Remedy"; 
+                            }
+                        }
 
 			// INICIO TRANSACCIÓN
 			if ( sqlsrv_begin_transaction( $conn ) === false ) {
@@ -136,7 +186,7 @@ function modificarTarea($conn, $id, $comentarios=""){
 			} else {			
    		
 				$tsqlFunc = "UPDATE INV_TBTAREAS SET COMENTARIOS = '".$comentarios."', COMENTARIOS2 = '".$_POST['COMENTARIOS2']."', INCIDENCIA = '".$_POST['INCIDENCIA'].
-				"', TICKET_OCEANE = '".$_POST['TICKET_OCEANE']."', ESCALADO = '".$_POST['TICKET_ESCALADO']."',  TP = '".$_POST['TP'].
+				"', TICKET_OCEANE = '".$_POST['TICKET_OCEANE']."', SUC = '".$_POST['SUC']."', ESCALADO = '".$_POST['TICKET_ESCALADO']."',  TP = '".$_POST['TP'].
 				"', CTO_NUEVA = '".$_POST['CTO_NUEVA']."', id_Subactividad = '".$subactividad."', PRIORIDAD ='".$prioridad."' WHERE id = '".$id."' ";
 
                                 //echo $tsqlFunc;exit();
