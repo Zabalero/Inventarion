@@ -1925,8 +1925,7 @@
 										?>
 									</td>
 
-											echo $SESSION['usuario']
-											echo $linea['USUORIGEN']	
+
 
 									<td class="center">
 										<?php if ($linea['RA_Actuacion'] != '' && $linea['RA_Actuacion'] !=null) {
@@ -1949,7 +1948,7 @@
 										<!-- <a title="Información CTOS" class="btn btn-warning btn-mini buscar_cto" data-toggle="modal" data-target="#viewModalC" data-id="<?php echo $linea['ID_TAREA']; ?>">		
 											<i class="halflings-icon white info-sign"></i>  -->
 										
-										<?php if ($rolUsuario == 'escritura' || $rolUsuario == 'avanzado' ) {
+										<?php if ($rolUsuario == 'escritura' || $rolUsuario == 'avanzado') {
 										?>
 										<a title="Gestionar Tarea" class="btn btn-success btn-mini gestionar_tarea" href="<?php echo 'modificarTarea.php?id='.$linea['ID_TAREA']; ?>">		
 											<i class="halflings-icon white edit"></i> 										
@@ -1959,16 +1958,6 @@
 										<a title="Historia Tarea" class="btn btn-mini btn-success buscar_historia" data-toggle="modal" data-target="#historiaModal" data-id="<?php echo $linea['ID_TAREA']; ?>">
 											<i class="halflings-icon white list"></i>
 										</a>
-
-										<?php if ($rolUsuario == 'lectura' || $linea['USUORIGEN'] == $_SESSION['usuario'] ) {
-										?>
-										<a title="Gestionar Tarea" class="btn btn-success btn-mini gestionar_tarea" href="<?php echo 'modificarTarea.php?id='.$linea['ID_TAREA']; ?>">		
-											<i class="halflings-icon white edit"></i> 	
-
-
-										</a>
-										<?php } ?>
-
 									</td>
 	                            </tr>
 								<?php } } ?>
