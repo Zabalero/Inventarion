@@ -1717,12 +1717,12 @@
                                                     </a>
                                                 <?php } ?>
                                               
-                                                 <?php if($_SERVER['REQUEST_METHOD']=='POST' &&  ($rolUsuario == 'escritura' || $rolUsuario == 'avanzado')) { ?>
+                                        <!--      <?php if($_SERVER['REQUEST_METHOD']=='POST' &&  ($rolUsuario == 'escritura' || $rolUsuario == 'avanzado')) { ?>
                                                     &nbsp;&nbsp;
                                                      <a title="Historia Tarea" class="btn btn-info asociar" data-toggle="modal" data-target="#asociarModal" data-id="<?php echo $linea['ID_TAREA']; ?>">
 							<i class="halflings-icon white road"></i>Asociar
 						     </a>
-                                                <?php } ?>
+                                                <?php } ?>-->
                                                
                                                    
                                             </td>
