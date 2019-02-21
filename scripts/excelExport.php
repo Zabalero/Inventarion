@@ -424,7 +424,7 @@ if ($solicitud === 'Saturadas') {
                 FROM INV_TBTAREAS LEFT JOIN INV_VIEW_DATOS_TODO ON INV_VIEW_DATOS_TODO.ID_TAREA = INV_TBTAREAS.ID
                 LEFT JOIN INV_TBTAREAS_CTO AS C ON INV_TBTAREAS.ID = C.ID 
                 LEFT JOIN INV_CTOS AS D ON C.COD_CTO = D.COD_CTO 
-                WHERE (Actividad='General' AND SUBACTIVIDAD='Seguimiento Ampliaciones CTOS Saturadas') or ( SUBACTIVIDAD='Rediseño de RED') or (SUBACTIVIDAD='Ampl. de red-CTOS saturadas') or (SUBACTIVIDAD='Diseño – CTO saturada') or (SUBACTIVIDAD='ACTIVACION DE PUERTOS');";
+                WHERE (Actividad='General' AND SUBACTIVIDAD='Seguimiento Ampliaciones CTOS Saturadas') or ( SUBACTIVIDAD='Rediseño de RED') or (SUBACTIVIDAD='Ampl. de red-CTOS saturadas') or (SUBACTIVIDAD='Diseño – CTO saturada') or (Actividad='General' AND SUBACTIVIDAD='ACTIVACION DE PUERTOS') or  (Actividad='Incidencia - Cliente' AND SUBACTIVIDAD='ACTIVACION DE PUERTOS') ;";
                 $stmt = sqlsrv_query( $conn, $tsql );
 
 
