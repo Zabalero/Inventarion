@@ -365,22 +365,26 @@ function insertarTareaRemedy($row, $ref_asociada, $anioMesCargaOceane, $anioMesC
 																										} else {  
 																											if ($concatenado  == 'XPJ FTTH-MODIFICACION PEX-ACTIVACION DE PUERTOS'){
 																												$subactividad = 69016;
-																												} else {          
+																												} else {
+																													if ($concatenado  == 'RED OSP-MODIFICACION PEX-RESOLUCION DEFINITIVA'){
+																														$subactividad = 139;
+																														} else {                    
 	               
-	         	     																								 $tsq3 = "SELECT TOP 1 * FROM INV_TBSUBACTIVIDAD WHERE (INV_TBSUBACTIVIDAD.id_Actividad=32 AND Descripcion='".$subactividad1."')";
-	              																				 					$stmt3 = sqlsrv_query( $conn, $tsq3);
+	         	     																									 $tsq3 = "SELECT TOP 1 * FROM INV_TBSUBACTIVIDAD WHERE (INV_TBSUBACTIVIDAD.id_Actividad=32 AND Descripcion='".$subactividad1."')";
+	              																				 						$stmt3 = sqlsrv_query( $conn, $tsq3);
 
 
-	               																									if( $stmt3 === false ){
-	                    																							die ("Error al ejecutar consulta".$tsq3);
-	                																									}
-																								 					$rows2 = sqlsrv_has_rows( $stmt3 );		
+	               																										if( $stmt3 === false ){
+	                    																								die ("Error al ejecutar consulta".$tsq3);
+	                																										}
+																								 						$rows2 = sqlsrv_has_rows( $stmt3 );		
 
-	                																								if ($rows2 === true) {					
+	                																									if ($rows2 === true) {					
 
-	                   																			 					$rows2 = sqlsrv_fetch_array($stmt3);
-	                    																		 					$subactividad=$rows2['id_Subactividad'];
-	                    																		 										}                																			
+	                   																			 						$rows2 = sqlsrv_fetch_array($stmt3);
+	                    																		 						$subactividad=$rows2['id_Subactividad'];
+	                    																		 											}                															
+	                    																		 								}			
 	                    																		 						}											
 																												}	            
            																								}
@@ -443,22 +447,25 @@ function insertarTareaRemedy($row, $ref_asociada, $anioMesCargaOceane, $anioMesC
 																										} else {   
 																											if ($concatenado  == 'XPJ FTTH-MODIFICACION PEX-ACTIVACION DE PUERTOS'){
 																												$subactividad = 69017;
-																												} else {             
+																												} else {  
+																													if ($concatenado  == 'RED OSP-MODIFICACION PEX-RESOLUCION DEFINITIVA'){
+																														$subactividad = 121;
+																														} else {  
             
-																					              				 $tsq3 = "SELECT TOP 1 * FROM INV_TBSUBACTIVIDAD WHERE (INV_TBSUBACTIVIDAD.id_Actividad=31 AND Descripcion='".$subactividad1."')";
-																					               				 $stmt3 = sqlsrv_query( $conn, $tsq3);
+																					              				 		$tsq3 = "SELECT TOP 1 * FROM INV_TBSUBACTIVIDAD WHERE (INV_TBSUBACTIVIDAD.id_Actividad=31 AND Descripcion='".$subactividad1."')";
+																					               				 		$stmt3 = sqlsrv_query( $conn, $tsq3);
 
 
-																					              		 		 if( $stmt3 === false ){
-																					                   				 die ("Error al ejecutar consulta".$tsq3);
-																					            		   		 }
+																					              		 		 		if( $stmt3 === false ){
+																					                   				 		die ("Error al ejecutar consulta".$tsq3);
+																					            		   		 								}
 
-																					               		 		$rows2 = sqlsrv_has_rows( $stmt3 );
-																					               				 if ($rows2 === true) {					
-																					                  		 		 $rows2 = sqlsrv_fetch_array($stmt3);
-																					                    				$subactividad=$rows2['id_Subactividad'];	
-
-                																												}
+																					               		 				$rows2 = sqlsrv_has_rows( $stmt3 );
+																					               				 		if ($rows2 === true) {					
+																					                  		 		 		$rows2 = sqlsrv_fetch_array($stmt3);
+																					                    						$subactividad=$rows2['id_Subactividad'];	
+                																															}
+                																												}			
             																											}
            																										}
            																								}		
